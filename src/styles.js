@@ -9,7 +9,8 @@ export const searchbarStyle = StyleSheet.create({
     top:10,
     left:10,
     flexDirection:'row',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom:15
 
   },
   input: {
@@ -24,10 +25,19 @@ export const searchbarStyle = StyleSheet.create({
 
 export const cityStyle = StyleSheet.create({
   container: {
-
+    backgroundColor: 'white',
+    padding:5,
+    margin:10,
+    borderWidth:1,
+    borderColor:'#e0e0e0',
+    borderRadius:10,
+    flexDirection:'row',
+    alignItems: 'center'
   },
   text: {
-
+    marginLeft:5,
+    fontWeight:'bold',
+    color:'#424242'
   },
 });
 
