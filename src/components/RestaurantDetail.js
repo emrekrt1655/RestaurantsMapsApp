@@ -6,6 +6,20 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {detailStyle} from '../styles';
 
 const RestaurantDetail = (props) => {
+
+  const showPrice = (length)=>{
+    const priceLabel = [];
+    for (let i = 0; i < length; i++) {
+      priceLabel.push(
+        <Icon key={i} name="currency-usd" size={25} color="#33691e" />,
+      );
+    }
+
+    return priceLabel;
+  }
+
+
+
   return (
     <Modal
       isVisible = {props.isVisible}
@@ -29,7 +43,9 @@ const RestaurantDetail = (props) => {
             <Icon name = 'phone' size={20} />
             <Text style={detailStyle.phone}> {props.restaurant.phone} </Text>
           </View>
-          {/* <View style={{flexDirection: 'row'}} > {showPrice(props.restaurant.price)} </View> */}
+          <View style={{flexDirection: 'row'}}>
+            {showPrice(props.restaurant.price)}
+          </View>
         </View>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in
@@ -51,4 +67,4 @@ const RestaurantDetail = (props) => {
   );
 };
 
-export {RestaurantDetail};
+export {RestaurantDetail}
