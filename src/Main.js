@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { SafeAreaView, Text, View, FlatList} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import {floatBanner} from './styles'
@@ -9,8 +9,13 @@ import Axios from 'axios';
 let originalList = [];
 
 const Main = (props) => {
+
+  const mapRef = useRef(null);
+
+  const [modalFlag, setModalFlag] = useState(false)
   const [cityList, setCityList] = useState([])
   const [restaurants, setRestaurants] = useState([]);
+  const [selectedRestaurant, setSelectedRestaurant]  = useState('')
 
 
   const fetchCities = async () => {
@@ -39,6 +44,25 @@ const Main = (props) => {
     // console.log(data.restaurants)
     const {data: {restaurants}} = await Axios.get('https://opentable.herokuapp.com/api/restaurants?city='+ city)
     setRestaurants(restaurants);
+    const restaurantsCoordinates = restaurants.map(res => {
+      return({
+        latitude: res.lat,
+        longitude: res.lng
+      });
+    })
+    mapRef.current.fitToCoordinates(restaurantsCoordinates, {
+      edgePadding:{
+        top:50,
+        right:25,
+        bottom:25,
+        left:25
+      }
+    })
+  }
+
+  const onRestaurantSelect = (restaurant) =>{
+    setSelectedRestaurant(restaurant);
+    setModalFlag(true);
   }
 
 
@@ -47,6 +71,7 @@ const Main = (props) => {
        
 
       <MapView
+        ref={mapRef}
         style = {{flex:1}}
         initialRegion={{
         latitude: 37.78825,
@@ -61,6 +86,7 @@ const Main = (props) => {
             latitude: r.lat,
             longitude: r.lng
           }}
+          onPress={ () => onRestaurantSelect(r) }
         />
         
         ))}
@@ -77,6 +103,12 @@ const Main = (props) => {
           data={cityList}
           renderItem = { ({item})=> <City cityName={item} onSelect ={()=> onCitySelect(item)} />}
       />
+
+        <RestaurantDetail
+          isVisible={modalFlag}
+          restaurant = {selectedRestaurant}
+        />
+
       </View>
       
 
