@@ -9,8 +9,13 @@ const RestaurantDetail = (props) => {
   return (
     <Modal
       isVisible = {props.isVisible}
+      style = {{justifyContent: 'flex-end', margin:0, marginHorizontal:10}}
+      onBackdropPress={props.onClose}
+      swipeDirection='down'
+      onSwipeComplete={props.onClose}
     >
       <View style={detailStyle.container}>
+      <View style={detailStyle.line}/>
         <Text style={detailStyle.name} > {props.restaurant.name} </Text>
         <Text style={detailStyle.address} > {props.restaurant.address} </Text>
         <View
@@ -20,7 +25,7 @@ const RestaurantDetail = (props) => {
             justifyContent: 'space-between'
           }}
         >
-          <View>
+          <View style={{flexDirection:'row'}}>
             <Icon name = 'phone' size={20} />
             <Text style={detailStyle.phone}> {props.restaurant.phone} </Text>
           </View>

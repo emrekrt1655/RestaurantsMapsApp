@@ -107,6 +107,7 @@ const Main = (props) => {
         <RestaurantDetail
           isVisible={modalFlag}
           restaurant = {selectedRestaurant}
+          onClose={() => setModalFlag(false)}
         />
 
       </View>
